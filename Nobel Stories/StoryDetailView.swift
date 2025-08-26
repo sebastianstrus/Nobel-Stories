@@ -12,26 +12,19 @@ struct StoryDetailView: View {
     @ObservedObject var viewModel: StoryViewModel
     
     @State private var selectedAnswers: [String: String] = [:]
-    
-    // Computed property to check if all questions are answered correctly
-    private var allQuestionsCorrect: Bool {
-        story.questions.allSatisfy { question in
-            selectedAnswers[question.question] == question.correct_answer
-        }
-    }
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var incorrectAnswersCount: Int = 0
     
     var body: some View {
         ZStack {
-            // Background with a subtle gradient
             LinearGradient(gradient: Gradient(colors: [Color.yellow.opacity(0.3), Color.orange.opacity(0.3)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 25) {
                     
-                    // Play Button with Kid-Friendly Design
                     Button(action: {
-                        // Action to play audio using the AudioManager
                         AudioManager.shared.playSound(storyId: story.id)
                     }) {
                         HStack {
@@ -50,14 +43,12 @@ struct StoryDetailView: View {
                     }
                     .padding(.horizontal)
                     
-                    // Story Text
                     Text(story.text)
                         .font(.body)
                         .padding()
                         .background(Color.white.opacity(0.7))
                         .cornerRadius(15)
                     
-                    // Questions Section
                     VStack(alignment: .leading, spacing: 20) {
                         ForEach(story.questions) { question in
                             VStack(alignment: .leading, spacing: 10) {
@@ -68,8 +59,8 @@ struct StoryDetailView: View {
                                 
                                 ForEach(question.options, id: \.self) { option in
                                     Button(action: {
+                                        // Update the selected answer without checking immediately
                                         selectedAnswers[question.question] = option
-                                        checkAnswers()
                                     }) {
                                         Text(option)
                                             .font(.subheadline)
@@ -88,39 +79,70 @@ struct StoryDetailView: View {
                         }
                     }
                     .padding()
+                    
+                    // The new "Check Answers" button
+                    Button(action: {
+                        checkAnswers()
+                    }) {
+                        Text("Check Answers")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(20)
+                            .shadow(radius: 5)
+                    }
+                    .padding(.horizontal)
                 }
                 .padding(.vertical, 20)
             }
             .onDisappear {
-                // Stop audio playback when the user navigates away from the view
                 AudioManager.shared.stopSound()
             }
         }
         .navigationTitle(story.title)
         .navigationBarTitleDisplayMode(.inline)
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Result"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+        }
     }
     
     private func backgroundColor(for question: Question, option: String) -> Color {
-        guard let selected = selectedAnswers[question.question] else { return .white.opacity(0.8) }
+        guard let selected = selectedAnswers[question.question] else {
+            return .white.opacity(0.8)
+        }
         
+        // This logic is simplified since we only show feedback after the user taps "Check Answers"
         if selected == option {
-            return option == question.correct_answer ? .green.opacity(0.4) : .red.opacity(0.4)
-        } else if selected != question.correct_answer && option == question.correct_answer {
-            // This case highlights the correct answer after the user selects an incorrect one
-            return .green.opacity(0.4)
+            return .yellow.opacity(0.4) // Highlight the selected option
         }
         
         return .white.opacity(0.8)
     }
     
     private func checkAnswers() {
-        if selectedAnswers.count == story.questions.count {
-            if allQuestionsCorrect {
-                viewModel.markStoryAsSolved(id: story.id)
-                print("All questions answered correctly. Story \(story.id) is solved! 🎉")
-            } else {
-                print("Incorrect answers. Try again.")
+        guard selectedAnswers.count == story.questions.count else {
+            alertMessage = "Please answer all the questions."
+            showAlert = true
+            return
+        }
+        
+        var incorrectCount = 0
+        for question in story.questions {
+            if selectedAnswers[question.question] != question.correct_answer {
+                incorrectCount += 1
             }
         }
+        
+        if incorrectCount == 0 {
+            viewModel.markStoryAsSolved(id: story.id)
+            alertMessage = "You answered all questions correctly! 🎉"
+        } else {
+            alertMessage = "You had \(incorrectCount) incorrect answer\(incorrectCount > 1 ? "s" : ""). Please try again."
+        }
+        
+        showAlert = true
     }
 }
