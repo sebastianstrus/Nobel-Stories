@@ -11,9 +11,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		7D2542C32D52C202000FDCC0 /* Nobel Math */ = {
+		7D2542C32D52C202000FDCC0 /* Nobel Stories */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Nobel Math";
+			path = "Nobel Stories";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		7D2542B82D52C202000FDCC0 = {
 			isa = PBXGroup;
 			children = (
-				7D2542C32D52C202000FDCC0 /* Nobel Math */,
+				7D2542C32D52C202000FDCC0 /* Nobel Stories */,
 				7D2542C22D52C202000FDCC0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,12 +61,12 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				7D2542C32D52C202000FDCC0 /* Nobel Math */,
+				7D2542C32D52C202000FDCC0 /* Nobel Stories */,
 			);
 			name = "Nobel Stories";
 			packageProductDependencies = (
 			);
-			productName = Matematik2;
+			productName = NobelStories;
 			productReference = 7D2542C12D52C202000FDCC0 /* Nobel Stories.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -275,7 +275,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Nobel Math/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Nobel Stories/Preview Content\"";
 				DEVELOPMENT_TEAM = 4SL936GBZY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -310,7 +310,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Nobel Math/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Nobel Stories/Preview Content\"";
 				DEVELOPMENT_TEAM = 4SL936GBZY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

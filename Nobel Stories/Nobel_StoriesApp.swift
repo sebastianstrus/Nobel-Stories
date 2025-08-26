@@ -64,7 +64,7 @@ struct SplashView: View {
                 Image("SplashIcon")
                     .resizable()
                     .frame(width: 150, height: 150)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .clipShape(RoundedRectangle(cornerRadius: 26))
                     .shadow(color: .black.opacity(0.3), radius: 10, x: 5, y: 5)
                 
                 Text("Nobel Stories")
