@@ -75,7 +75,7 @@ struct WelcomeView: View {
                 Spacer()
                 
                 Group {
-                        NavigationLink(destination: LearnView().environmentObject(settings)) {
+                        NavigationLink(destination: StoryListView().environmentObject(settings)) {
                             Text("Start")
                                 .font(.system(size: 20, weight: .bold, design: .rounded))
                                 .foregroundColor(.white)
