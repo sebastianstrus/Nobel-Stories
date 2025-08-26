@@ -31,8 +31,8 @@ struct StoryDetailView: View {
                     
                     // Play Button with Kid-Friendly Design
                     Button(action: {
-                        // Play audio
-                        print("Play button tapped for \(story.title)")
+                        // Action to play audio using the AudioManager
+                        AudioManager.shared.playSound(storyId: story.id)
                     }) {
                         HStack {
                             Image(systemName: "play.circle.fill")
@@ -90,6 +90,10 @@ struct StoryDetailView: View {
                     .padding()
                 }
                 .padding(.vertical, 20)
+            }
+            .onDisappear {
+                // Stop audio playback when the user navigates away from the view
+                AudioManager.shared.stopSound()
             }
         }
         .navigationTitle(story.title)
