@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct LegalLinksView: View {
-    let termsURL = URL(string: "https://sebastianstrus.com/documents/nobel-math/privacy-policy.html")!
-    let privacyURL = URL(string: "https://sebastianstrus.com/documents/nobel-math/terms-of-use.html")!
+    let termsURL = URL(string: "https://sebastianstrus.com/documents/nobel-stories/privacy-policy.html")!
+    let privacyURL = URL(string: "https://sebastianstrus.com/documents/nobel-stories/terms-of-use.html")!
 
     var body: some View {
         HStack(spacing: 24) {

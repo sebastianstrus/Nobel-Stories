@@ -146,3 +146,72 @@ struct StoryDetailView: View {
         showAlert = true
     }
 }
+
+
+
+struct BigStarBurstView: View {
+    struct Star: Identifiable {
+        let id = UUID()
+        var x: CGFloat
+        var y: CGFloat
+        var scale: CGFloat
+        var opacity: Double
+        var rotation: Angle
+        var delay: Double
+    }
+
+    @State private var stars: [Star] = []
+
+    var body: some View {
+        GeometryReader { geo in
+            ZStack {
+                ForEach(stars) { star in
+                    Image(systemName: "sparkle")
+                        .foregroundColor(.yellow)
+                        .opacity(star.opacity)
+                        .scaleEffect(star.scale)
+                        .rotationEffect(star.rotation)
+                        .position(x: star.x, y: star.y)
+                        .onAppear {
+                            withAnimation(
+                                .easeOut(duration: 2.0)
+                                .delay(star.delay)
+                            ) {
+                                moveStarAway(index: star.id, in: geo.size)
+                            }
+                        }
+                }
+            }
+            .onAppear {
+                generateStars(in: geo.size)
+            }
+        }
+        .allowsHitTesting(false)
+    }
+
+    private func generateStars(in size: CGSize) {
+        stars = (0..<80).map { _ in
+            let scale = UIDevice.current.userInterfaceIdiom == .pad ? Double.random(in: 6...12) : Double.random(in: 3...6)
+            return Star(
+                x: size.width / 2,
+                y: size.height / 2,
+                scale: scale,
+                opacity: 1.0,
+                rotation: .degrees(Double.random(in: 0...360)),
+                delay: Double.random(in: 0...0.2)
+            )
+        }
+    }
+
+    private func moveStarAway(index id: UUID, in size: CGSize) {
+        let radius: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 1000 : 500
+        if let index = stars.firstIndex(where: { $0.id == id }) {
+            let angle = Double.random(in: 0...360) * .pi / 180
+            let radius: CGFloat = CGFloat.random(in: 50...(radius))
+            stars[index].x += cos(angle) * radius
+            stars[index].y += sin(angle) * radius
+            stars[index].scale = 0.1
+            stars[index].opacity = 0
+        }
+    }
+}
