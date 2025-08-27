@@ -9,32 +9,42 @@ import SwiftUI
 
 struct StoryDetailView: View {
     let story: Story
+    
     @ObservedObject var viewModel: StoryViewModel
     
     @State private var selectedAnswers: [String: String] = [:]
     @State private var showAlert = false
+    @State private var showStars = false
     @State private var alertMessage = ""
     @State private var incorrectAnswersCount: Int = 0
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.yellow.opacity(0.3), Color.orange.opacity(0.3)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .edgesIgnoringSafeArea(.all)
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color.white.opacity(0.9),
+                    Color.blue.opacity(0.2)
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .edgesIgnoringSafeArea(.all)
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 25) {
                     
                     Text(story.title)
-                        .font(.system(size: 18, weight: .bold, design: .default))
+                        .font(.custom("ChalkboardSE-Regular", size: 24))
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 8)
+                        
                     
                     Text(story.text)
-                        .font(.body)
+                        .font(.custom("ChalkboardSE-Regular", size: 22))
                         .padding()
-                        .background(Color.white.opacity(0.7))
                         .cornerRadius(15)
                         .padding()
+                        .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 80 : 0)
                     
                     VStack(alignment: .leading, spacing: 20) {
                         ForEach(story.questions) { question in
@@ -87,6 +97,10 @@ struct StoryDetailView: View {
             }
             .onDisappear {
                 AudioManager.shared.stopSound()
+            }
+            
+            if showStars {
+                BigStarBurstView()
             }
         }
         .toolbar {
@@ -148,12 +162,18 @@ struct StoryDetailView: View {
         
         if incorrectCount == 0 {
             viewModel.markStoryAsSolved(id: story.id)
-            alertMessage = "You answered all questions correctly! 🎉"
+            showStars = true
+            
+            SoundManager.shared.playSound(named: "stars", withExtension: "m4a")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                showStars = false
+            }
         } else {
             alertMessage = "You had \(incorrectCount) incorrect answer\(incorrectCount > 1 ? "s" : ""). Please try again."
+            
+            showAlert = true
         }
         
-        showAlert = true
     }
 }
 
