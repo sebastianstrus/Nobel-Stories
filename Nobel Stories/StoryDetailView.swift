@@ -24,30 +24,17 @@ struct StoryDetailView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 25) {
                     
-                    Button(action: {
-                        AudioManager.shared.playSound(storyId: story.id)
-                    }) {
-                        HStack {
-                            Image(systemName: "play.circle.fill")
-                                .font(.largeTitle)
-                            Text("Listen to the Story")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                        }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(20)
-                        .shadow(radius: 5)
-                    }
-                    .padding(.horizontal)
+                    Text(story.title)
+                        .font(.system(size: 18, weight: .bold, design: .default))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.top, 8)
                     
                     Text(story.text)
                         .font(.body)
                         .padding()
                         .background(Color.white.opacity(0.7))
                         .cornerRadius(15)
+                        .padding()
                     
                     VStack(alignment: .leading, spacing: 20) {
                         ForEach(story.questions) { question in
@@ -102,7 +89,30 @@ struct StoryDetailView: View {
                 AudioManager.shared.stopSound()
             }
         }
-        .navigationTitle(story.title)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    AudioManager.shared.playSound(storyId: story.id)
+                }) {
+                    Image(systemName: "play.circle.fill")
+//                            .font(.title2)
+                        .glassEffect()
+//                        .foregroundColor(.white)
+//                            .padding()
+                }
+                
+                
+//                NavigationLink(destination: SettingsView()) {
+//                    Image(systemName: "play.circle.fill")
+////                            .font(.title2)
+//                        .glassEffect()
+//                        .foregroundColor(.white)
+////                            .padding()
+//                }
+            }
+            
+        }
+        .navigationTitle("Story".localized)
         .navigationBarTitleDisplayMode(.inline)
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Result"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
