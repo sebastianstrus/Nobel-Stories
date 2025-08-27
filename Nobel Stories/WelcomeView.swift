@@ -132,9 +132,10 @@ struct WelcomeView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: SettingsView()) {
                         Image(systemName: "gear")
-                            .font(.title2)
+//                            .font(.title2)
+                            .glassEffect()
                             .foregroundColor(.white)
-                            .padding()
+//                            .padding()
                     }
                 }
                 

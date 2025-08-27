@@ -11,7 +11,7 @@ struct StoryListView: View {
     @StateObject private var viewModel = StoryViewModel()
     
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             ZStack {
                 // Background with a subtle gradient
                 LinearGradient(gradient: Gradient(colors: [Color.pink.opacity(0.3), Color.blue.opacity(0.3)]), startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -47,6 +47,6 @@ struct StoryListView: View {
                 .scrollContentBackground(.hidden) // Hides the default list background
                 .navigationTitle("Magic Stories 📚")
             }
-        }
+//        }
     }
 }
