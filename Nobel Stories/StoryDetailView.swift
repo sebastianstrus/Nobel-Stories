@@ -10,7 +10,7 @@ import SwiftUI
 struct StoryDetailView: View {
     let story: Story
     
-    @ObservedObject var viewModel: StoryViewModel
+    @ObservedObject var viewModel: StoryListViewModel
     
     @State private var selectedAnswers: [String: String] = [:]
     @State private var showAlert = false

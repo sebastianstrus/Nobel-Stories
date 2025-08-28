@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StoryListView: View {
-    @StateObject private var viewModel = StoryViewModel()
+    @StateObject private var viewModel = StoryListViewModel()
     
     var body: some View {
         ZStack {

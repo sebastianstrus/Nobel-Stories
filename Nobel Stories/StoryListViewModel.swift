@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 // ViewModel for managing story data and state
-class StoryViewModel: ObservableObject {
+class StoryListViewModel: ObservableObject {
     @Published var stories: [Story] = []
     
     // A string to store the solved story IDs as a comma-separated list
