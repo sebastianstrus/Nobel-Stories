@@ -61,12 +61,14 @@ struct WelcomeView: View {
                 
                 Group {
                     Text("Nobel Stories")
-                        .font(.system(size: titleSize, weight: .bold, design: .rounded))
+                        .font(.custom("ChalkboardSE-Regular", size: titleSize))
+//                        .font(.system(size: titleSize, weight: .bold, design: .rounded))
                         .foregroundStyle(.white.opacity(0.9))
                         .shadow(color: .black.opacity(0.8), radius: 3, x: 3, y: 3)
                     
                     Text("Discover the Joy of Reading.")
-                        .font(.system(size: subtitleSize, weight: .regular, design: .rounded))
+                        .font(.custom("ChalkboardSE-Regular", size: subtitleSize))
+//                        .font(.system(size: subtitleSize, weight: .regular, design: .rounded))
                         .foregroundStyle(.white.opacity(0.9))
                         .shadow(color: .black.opacity(0.8), radius: 2, x: 2, y: 2)
                 }
@@ -76,18 +78,24 @@ struct WelcomeView: View {
                 
                 Group {
                         NavigationLink(destination: StoryListView().environmentObject(settings)) {
-                            Text("Start")
-                                .font(.system(size: 20, weight: .bold, design: .rounded))
+                            Text("Explore Stories")
+                                .font(.custom("ChalkboardSE-Regular", size: 24))
                                 .foregroundColor(.white)
-                                .padding(.horizontal, 40)
-                                .padding(.vertical, 16)
-                                .background(
-                                    Capsule()
-                                        .fill(LinearGradient(gradient: Gradient(colors: [.blue, .purple]),
-                                                             startPoint: .leading,
-                                                             endPoint: .trailing))
-                                )
-                                .shadow(color: .purple.opacity(0.4), radius: 10, x: 0, y: 4)
+                                .padding(15)
+                                .padding(.horizontal)
+                                .glassEffect()
+                            
+//                                .font(.system(size: 20, weight: .bold, design: .rounded))
+//                                .foregroundColor(.white)
+//                                .padding(.horizontal, 40)
+//                                .padding(.vertical, 16)
+//                                .background(
+//                                    Capsule()
+//                                        .fill(LinearGradient(gradient: Gradient(colors: [.yellow, .orange]),
+//                                                             startPoint: .leading,
+//                                                             endPoint: .trailing))
+//                                )
+//                                .shadow(color: .orange.opacity(0.4), radius: 10, x: 0, y: 4)
                             
                             
                             
@@ -218,7 +226,7 @@ struct SubscriptionButton: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(
                     highlight ?
-                    LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.2), Color.purple.opacity(0.2)]),
+                    LinearGradient(gradient: Gradient(colors: [Color.orange.opacity(0.2), Color.yellow.opacity(0.2)]),
                                    startPoint: .topLeading,
                                    endPoint: .bottomTrailing) :
                         LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.black.opacity(0.5)]),
@@ -229,7 +237,7 @@ struct SubscriptionButton: View {
                     RoundedRectangle(cornerRadius: 16)
                         .stroke(
                             highlight ?
-                            LinearGradient(gradient: Gradient(colors: [.blue, .purple]),
+                            LinearGradient(gradient: Gradient(colors: [.orange, .yellow]),
                                            startPoint: .topLeading,
                                            endPoint: .bottomTrailing) :
                                 LinearGradient(gradient: Gradient(colors: [.white.opacity(0.5), .white.opacity(0.5)]),

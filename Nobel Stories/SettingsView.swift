@@ -69,7 +69,7 @@ struct SettingsView: View {
                                 VStack(spacing: 8) {
                                     HStack(spacing: 6) {
                                         Image(systemName: "crown.fill")
-                                            .foregroundColor(.yellow)
+                                            .foregroundColor(.white)
                                         Text("Try Premium".localized)
                                             .font(.system(size: 18, weight: .bold))
                                             .foregroundColor(.white)
@@ -83,13 +83,13 @@ struct SettingsView: View {
                                 .frame(maxWidth: .infinity)
                                 .background(
                                     LinearGradient(
-                                        gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                        gradient: Gradient(colors: [Color.yellow, Color.orange]),
                                         startPoint: .leading,
                                         endPoint: .trailing
                                     )
                                 )
-                                .cornerRadius(10)
-                                .shadow(color: .purple.opacity(0.4), radius: 5, x: 0, y: 2)
+                                .cornerRadius(20)
+//                                .shadow(color: .orange.opacity(0.4), radius: 5, x: 0, y: 2)
                                 Spacer()
                             }
                         }
@@ -206,7 +206,7 @@ struct SettingsView: View {
                     Image(systemName: "square.and.arrow.up")
                         .accessibilityLabel("Share".localized)
                 }
-                .tint(.purple)
+                .tint(.orange)
             }
         }
     }
@@ -262,7 +262,7 @@ struct ProBadge: View {
         Text("PRO")
             .font(.caption2.bold())
             .padding(4)
-            .background(Color.purple)
+            .background(Color.orange)
             .foregroundColor(.white)
             .cornerRadius(4)
     }

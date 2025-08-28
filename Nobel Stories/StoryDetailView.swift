@@ -4,7 +4,6 @@
 //
 //  Created by Sebastian Strus on 8/26/25.
 //
-
 import SwiftUI
 
 struct StoryDetailView: View {
@@ -20,55 +19,56 @@ struct StoryDetailView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color.white.opacity(0.9),
-                    Color.blue.opacity(0.2)
-                ]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .edgesIgnoringSafeArea(.all)
+            LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
+                .blur(radius: 50)
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 25) {
                     
                     Text(story.title)
-                        .font(.custom("ChalkboardSE-Regular", size: 24))
+                    
+                        .font(.system(size: 30, weight: .heavy, design: .rounded))
+                        .foregroundColor(.red)
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.top, 8)
-                        
+//                        .padding(.top, 8)
+                        .padding(.horizontal)
                     
                     Text(story.text)
-                        .font(.custom("ChalkboardSE-Regular", size: 22))
+                        .font(.custom("ChalkboardSE-Regular", size: 24))
+//                        .font(.system(size: 24, weight: .regular, design: .rounded))
+                        .padding(40)
+                        .background(
+                            RoundedRectangle(cornerRadius: 25)
+                                .fill(Color.white.opacity(0.8))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 25)
+                                        .stroke(Color.black, lineWidth: 4)
+                                )
+                        )
                         .padding()
-                        .cornerRadius(15)
-                        .padding()
-                        .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 80 : 0)
                     
                     VStack(alignment: .leading, spacing: 20) {
-                        ForEach(story.questions) { question in
+                        ForEach(Array(story.questions.enumerated()), id: \.element.id) { index, question in
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("❓ \(question.question)")
-                                    .font(.headline)
-                                    .fontWeight(.bold)
+                                Text("\(index + 1). \(question.question)")
+                                    .font(.system(size: 24, weight: .bold, design: .rounded))
                                     .foregroundColor(.black)
                                 
                                 ForEach(question.options, id: \.self) { option in
                                     Button(action: {
-                                        // Update the selected answer without checking immediately
                                         selectedAnswers[question.question] = option
                                     }) {
                                         Text(option)
-                                            .font(.subheadline)
+                                            .font(.system(size: 20, weight: .heavy, design: .rounded))
                                             .frame(maxWidth: .infinity)
-                                            .padding()
+                                            .padding(15)
                                             .background(backgroundColor(for: question, option: option))
                                             .foregroundColor(.primary)
-                                            .cornerRadius(10)
+                                            .cornerRadius(25)
                                             .overlay(
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .stroke(Color.gray, lineWidth: 1)
+                                                RoundedRectangle(cornerRadius: 25)
+                                                    .stroke(Color.black, lineWidth: 4)
                                             )
                                     }
                                 }
@@ -77,23 +77,28 @@ struct StoryDetailView: View {
                     }
                     .padding()
                     
-                    // The new "Check Answers" button
                     Button(action: {
                         checkAnswers()
                     }) {
                         Text("Check Answers")
-                            .font(.title2)
-                            .fontWeight(.semibold)
+                            .font(.system(size: 24, weight: .heavy, design: .rounded))
                             .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(20)
-                            .shadow(radius: 5)
+                            .padding(20)
+                            .background(
+                                RoundedRectangle(cornerRadius: 25)
+                                    .fill(Color.white.opacity(0.8))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 25)
+                                            .stroke(Color.black, lineWidth: 4)
+                                    )
+                            )
+                            .foregroundColor(.green)
+                            .padding(.horizontal)
                     }
-                    .padding(.horizontal)
                 }
                 .padding(.vertical, 20)
+                .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 40 : 0)
+
             }
             .onDisappear {
                 AudioManager.shared.stopSound()
@@ -109,25 +114,16 @@ struct StoryDetailView: View {
                     AudioManager.shared.playSound(storyId: story.id)
                 }) {
                     Image(systemName: "play.circle.fill")
-//                            .font(.title2)
+//                        .font(.system(size: 36, weight: .heavy, design: .rounded))
                         .glassEffect()
-//                        .foregroundColor(.white)
-//                            .padding()
+                        .foregroundColor(.white)
+                    
+                    
                 }
-                
-                
-//                NavigationLink(destination: SettingsView()) {
-//                    Image(systemName: "play.circle.fill")
-////                            .font(.title2)
-//                        .glassEffect()
-//                        .foregroundColor(.white)
-////                            .padding()
-//                }
             }
-            
         }
-        .navigationTitle("Story".localized)
-        .navigationBarTitleDisplayMode(.inline)
+//        .navigationTitle("Story")
+//        .navigationBarTitleDisplayMode(.inline)
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Result"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
@@ -138,9 +134,8 @@ struct StoryDetailView: View {
             return .white.opacity(0.8)
         }
         
-        // This logic is simplified since we only show feedback after the user taps "Check Answers"
         if selected == option {
-            return .yellow.opacity(0.4) // Highlight the selected option
+            return .yellow.opacity(0.4)
         }
         
         return .white.opacity(0.8)
@@ -179,6 +174,8 @@ struct StoryDetailView: View {
 
 
 
+import SwiftUI
+
 struct BigStarBurstView: View {
     struct Star: Identifiable {
         let id = UUID()
@@ -188,18 +185,25 @@ struct BigStarBurstView: View {
         var opacity: Double
         var rotation: Angle
         var delay: Double
+        var animal: String
     }
 
     @State private var stars: [Star] = []
+
+    // 👇 Colorful emoji animals
+    private let animals = [
+        "🐢","🐇","🐞","🐟","🐦","🐱","🐶","🦆","🐘",
+        "🐻","🐸","🐄","🐴","🦁","🦦","🐌","🦉","🦋",
+        "🦊","🦒","🐬","🐙","🦜","🦔"
+    ]
 
     var body: some View {
         GeometryReader { geo in
             ZStack {
                 ForEach(stars) { star in
-                    Image(systemName: "sparkle")
-                        .foregroundColor(.yellow)
+                    Text(star.animal)
+                        .font(.system(size: star.scale)) // 👈 scale with font size
                         .opacity(star.opacity)
-                        .scaleEffect(star.scale)
                         .rotationEffect(star.rotation)
                         .position(x: star.x, y: star.y)
                         .onAppear {
@@ -221,27 +225,31 @@ struct BigStarBurstView: View {
 
     private func generateStars(in size: CGSize) {
         stars = (0..<80).map { _ in
-            let scale = UIDevice.current.userInterfaceIdiom == .pad ? Double.random(in: 6...12) : Double.random(in: 3...6)
+            // 👇 Big on iPad, smaller on iPhone — but still random
+            let scale = UIDevice.current.userInterfaceIdiom == .pad
+                ? Double.random(in: 60...120) // larger emoji
+                : Double.random(in: 40...80) // smaller emoji
+
             return Star(
                 x: size.width / 2,
                 y: size.height / 2,
                 scale: scale,
                 opacity: 1.0,
                 rotation: .degrees(Double.random(in: 0...360)),
-                delay: Double.random(in: 0...0.2)
+                delay: Double.random(in: 0...0.2),
+                animal: animals.randomElement()!
             )
         }
     }
 
     private func moveStarAway(index id: UUID, in size: CGSize) {
-        let radius: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 1000 : 500
+        let maxRadius: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 1000 : 500
         if let index = stars.firstIndex(where: { $0.id == id }) {
             let angle = Double.random(in: 0...360) * .pi / 180
-            let radius: CGFloat = CGFloat.random(in: 50...(radius))
+            let radius: CGFloat = CGFloat.random(in: 50...maxRadius)
             stars[index].x += cos(angle) * radius
             stars[index].y += sin(angle) * radius
-            stars[index].scale = 0.1
-            stars[index].opacity = 0
+            stars[index].scale = 0.5 // shrink as it fades
         }
     }
 }

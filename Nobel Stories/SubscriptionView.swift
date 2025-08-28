@@ -138,11 +138,11 @@ struct SubscriptionView: View {
                                 .padding(.vertical, 16)
                                 .background(
                                     Capsule()
-                                        .fill(LinearGradient(gradient: Gradient(colors: [.blue, .purple]),
+                                        .fill(LinearGradient(gradient: Gradient(colors: [.yellow, .orange]),
                                                              startPoint: .leading,
                                                              endPoint: .trailing))
                                 )
-                                .shadow(color: .purple.opacity(0.4), radius: 10, x: 0, y: 4)
+                                .shadow(color: .orange.opacity(0.4), radius: 10, x: 0, y: 4)
                         }.padding(.horizontal)
                         
                         
