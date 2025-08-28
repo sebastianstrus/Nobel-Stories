@@ -29,7 +29,7 @@ struct StoryDetailView: View {
                     Text(story.title)
                     
                         .font(.system(size: 30, weight: .heavy, design: .rounded))
-                        .foregroundColor(.red)
+                        .foregroundColor(.pink)
                         .frame(maxWidth: .infinity, alignment: .center)
 //                        .padding(.top, 8)
                         .padding(.horizontal)
