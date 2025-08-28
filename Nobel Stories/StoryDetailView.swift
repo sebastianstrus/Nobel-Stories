@@ -36,6 +36,7 @@ struct StoryDetailView: View {
                     
                     Text(story.text)
                         .font(.custom("ChalkboardSE-Regular", size: 24))
+                        .foregroundColor(.black)
 //                        .font(.system(size: 24, weight: .regular, design: .rounded))
                         .padding(40)
                         .background(
@@ -64,7 +65,7 @@ struct StoryDetailView: View {
                                             .frame(maxWidth: .infinity)
                                             .padding(15)
                                             .background(backgroundColor(for: question, option: option))
-                                            .foregroundColor(.primary)
+                                            .foregroundColor(.black)
                                             .cornerRadius(25)
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 25)
@@ -116,7 +117,7 @@ struct StoryDetailView: View {
                     Image(systemName: "play.circle.fill")
 //                        .font(.system(size: 36, weight: .heavy, design: .rounded))
                         .glassEffect()
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                     
                     
                 }

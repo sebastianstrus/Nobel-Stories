@@ -10,6 +10,8 @@ import MessageUI
 
 struct SettingsView: View {
     
+
+    
     @EnvironmentObject private var purchaseManager: PurchaseManager
     @EnvironmentObject var settings: SettingsManager
     @Environment(\.colorScheme) var colorScheme
@@ -140,13 +142,26 @@ struct SettingsView: View {
                 Section(header: Text("Let Us Know What You Think".localized)) {
                     Button("Share Feedback".localized) {
                         showMailComposer = true
-                    }
+                    }.foregroundStyle(
+                        LinearGradient(
+                            colors: [.orange, .yellow],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
                 }
                 
                 Section(header: resetSectionHeader) {
                     Button("Reset Settings".localized) {
                         settings.resetSettings()
                     }
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.orange, .yellow],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
                 }.disabled(!purchaseManager.hasUnlockedPro)
                 
                 //                Section(header: Text("Application Cache".localized)) {
@@ -157,7 +172,21 @@ struct SettingsView: View {
                 //                }
             }
         }
-        .navigationTitle("Settings".localized)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Settings".localized)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.orange, .yellow],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+            }
+        }
+        .accentColor(.orange)
+        
+//        .navigationTitle("Settings".localized)
         .sheet(isPresented: $showSubscriptionSheet) {
             SubscriptionView()
         }
@@ -205,8 +234,15 @@ struct SettingsView: View {
                 Button(action: shareApp) {
                     Image(systemName: "square.and.arrow.up")
                         .accessibilityLabel("Share".localized)
+                        .glassEffect()
+                        .foregroundStyle(
+                                LinearGradient(
+                                    colors: [.orange, .yellow],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
                 }
-                .tint(.orange)
             }
         }
     }

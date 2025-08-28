@@ -68,7 +68,7 @@ struct SplashView: View {
                     .shadow(color: .black.opacity(0.3), radius: 10, x: 5, y: 5)
                 
                 Text("Nobel Stories")
-                    .font(.custom("ChalkboardSE-Regular", size: titleSize))
+                    .font(.custom("ChalkboardSE-Bold", size: titleSize))
 //                    .font(.system(size: titleSize, weight: .bold, design: .rounded))
                     .foregroundStyle(.white.opacity(0.9))
                     .shadow(color: .black.opacity(0.8), radius: 3, x: 3, y: 3)

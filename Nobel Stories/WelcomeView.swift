@@ -12,9 +12,10 @@ struct WelcomeContentView: View {
     @EnvironmentObject private var purchaseManager: PurchaseManager
     
     var body: some View {
-        TransparentNavigationView {
+        NavigationStack {
             WelcomeView()
         }
+//        .containerBackground(.clear, for: .navigation)
         .ignoresSafeArea()
         .task {
             do {
@@ -63,13 +64,25 @@ struct WelcomeView: View {
                     Text("Nobel Stories")
                         .font(.custom("ChalkboardSE-Regular", size: titleSize))
 //                        .font(.system(size: titleSize, weight: .bold, design: .rounded))
-                        .foregroundStyle(.white.opacity(0.9))
+                        .foregroundStyle(
+                                LinearGradient(
+                                    colors: [.orange, .yellow],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
                         .shadow(color: .black.opacity(0.8), radius: 3, x: 3, y: 3)
                     
                     Text("Discover the Joy of Reading.")
                         .font(.custom("ChalkboardSE-Regular", size: subtitleSize))
 //                        .font(.system(size: subtitleSize, weight: .regular, design: .rounded))
-                        .foregroundStyle(.white.opacity(0.9))
+                        .foregroundStyle(
+                                LinearGradient(
+                                    colors: [.orange, .yellow],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
                         .shadow(color: .black.opacity(0.8), radius: 2, x: 2, y: 2)
                 }
                 
@@ -79,8 +92,14 @@ struct WelcomeView: View {
                 Group {
                         NavigationLink(destination: StoryListView().environmentObject(settings)) {
                             Text("Explore Stories")
-                                .font(.custom("ChalkboardSE-Regular", size: 24))
-                                .foregroundColor(.white)
+                                .font(.custom("ChalkboardSE-Bold", size: 24))
+                                .foregroundStyle(
+                                        LinearGradient(
+                                            colors: [.orange, .yellow],
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        )
+                                    )
                                 .padding(15)
                                 .padding(.horizontal)
                                 .glassEffect()
@@ -142,7 +161,13 @@ struct WelcomeView: View {
                         Image(systemName: "gear")
 //                            .font(.title2)
                             .glassEffect()
-                            .foregroundColor(.white)
+                            .foregroundStyle(
+                                    LinearGradient(
+                                        colors: [.orange, .yellow],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
 //                            .padding()
                     }
                 }
