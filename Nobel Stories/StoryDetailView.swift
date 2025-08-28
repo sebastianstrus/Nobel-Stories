@@ -116,7 +116,7 @@ struct StoryDetailView: View {
                     Image(systemName: "play.circle.fill")
 //                        .font(.system(size: 36, weight: .heavy, design: .rounded))
                         .glassEffect()
-                        .foregroundColor(.white)
+                        .foregroundColor(.black)
                     
                     
                 }
